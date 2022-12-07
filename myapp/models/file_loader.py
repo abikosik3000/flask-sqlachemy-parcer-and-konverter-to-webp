@@ -25,6 +25,8 @@ class FileLoader:
             file.save(file_path)
 
             return file_path
+        else:
+            return None
             
     @classmethod
     def save_from_url(cls,upload_folder,url,filename_save = ""):
@@ -49,7 +51,10 @@ class FileLoader:
                         if chunk:
                             f.write(chunk)
 
-        return file_path
+            return file_path
+
+        else:
+            return None
 
     # расширения файлов, которые разрешено загружать
     ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
