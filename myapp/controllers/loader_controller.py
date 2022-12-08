@@ -17,7 +17,7 @@ def post_upload(app,request):
         flash('Нет выбранного файла')
         return redirect(request.url)
         
-    file_path = FileLoader.save_from_temp(app.config['UPLOAD_FOLDER'] , file)
+    file_path = FileLoader.save_from_temp( file)
 
     #FileConverter.convert_to(app,file_path,"WEBP")
 

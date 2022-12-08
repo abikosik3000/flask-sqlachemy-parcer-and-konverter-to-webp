@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from myapp import app , db
-from flask import Flask ,render_template , flash, request, redirect, url_for
+from flask import Flask ,render_template , flash, request, redirect, url_for , send_from_directory
 
 import myapp.controllers.loader_controller as loader_controller
 import myapp.controllers.optimize_controller as optimize_controller
 from myapp.forms.login import LoginForm
 
 from myapp.models.user import User
+
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -32,10 +33,21 @@ def get_upload():
 def post_upload():
     return loader_controller.post_upload(app,request)
 
+@app.route('/uploads/<path:name>')
+def download_file(name):
+    return send_from_directory(app.config["UPLOAD_FOLDER"], name)
+
 @app.route('/optimize' , methods=['GET'])
 def get_optimize():
     return optimize_controller.get_upload_from_site(app,request)
     
+@app.route('/shutdown', methods=['GET'])
+def shutdown():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+    return 'Server shutting down...'
 
 @app.route('/optimize' , methods=['POST'])
 def post_optimize():

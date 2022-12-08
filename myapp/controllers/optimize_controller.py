@@ -16,15 +16,9 @@ def get_upload_from_site(app,request):
 
     parse_seanse_id = request.args.get('parse_seanse_id')
     
-
     query = File.query.filter(File.parse_seanse_id == parse_seanse_id).all()
-    #query = File.query.all()
     print(query)
-    #images = []
-    #for img in query:
-    #    images.append(img._asdict())
-    #    print(img._asdict())
-    #print(images)
+
     return render_template('upload_from_site.html' , images=query)
 
 def post_upload_from_site(app,request):
@@ -39,22 +33,22 @@ def post_upload_from_site(app,request):
     save_urls = []
     parse_id = str( uuid.uuid4() )
     for url in urls:
-        buff = FileLoader.save_from_url(
-                app.config['UPLOAD_FOLDER'] +"/"+PARSE_FOLDER_NAME+"/"+parse_id ,url)
+
+        buff = FileLoader.save_from_url( 
+            os.path.join( PARSE_FOLDER_NAME , parse_id)
+            , url)
+
         if(not (buff is None)):
             save_urls.append( buff)
-
-    
 
     seanse = Parse_seanse()
     db.session.add(seanse)
     db.session.commit()
     
-
     for path in save_urls:
 
         _filename_save = path.split("/")[-1]
-        _upload_folder = PARSE_FOLDER_NAME+"/"+parse_id+"/optimized"
+        _upload_folder = os.path.join(PARSE_FOLDER_NAME, parse_id,"optimized")
         FileConverter.convert_to(_upload_folder,path,"WEBP"
         , filename_save=_filename_save , parse_seanse_id=seanse.id)
         

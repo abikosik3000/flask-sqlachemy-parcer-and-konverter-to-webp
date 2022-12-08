@@ -13,7 +13,7 @@
   </form>
 
   {% for image in images %}
-    <img src="{{image.path}}" >
+    <img src="{{image.path}}/{{image.name}}.{{image.extenstion}}" >
     
   {% endfor %}
   

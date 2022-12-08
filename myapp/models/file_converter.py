@@ -13,9 +13,12 @@ class FileConverter:
     @classmethod
     def convert_to(cls, upload_folder ,file_path ,convert_ext ,filename_save = "" , parse_seanse_id = None):
 
-         # если путь не существует, создать di
-        if not os.path.isdir(app.config['UPLOAD_FOLDER'] +"/"+upload_folder):
-            os.makedirs(app.config['UPLOAD_FOLDER'] +"/"+upload_folder)
+
+        abs_path_upload = os.path.join(app.config['UPLOAD_FOLDER'] , upload_folder)
+        abs_file_path = os.path.join(app.config['UPLOAD_FOLDER'] , file_path)
+         # если путь не существует, создать dir
+        if not os.path.isdir(abs_path_upload):
+            os.makedirs(abs_path_upload)
 
         if(filename_save == ""):
             #рандомное название
@@ -25,10 +28,10 @@ class FileConverter:
             filename_save = filename_save.split(".")[0] + "." + convert_ext.lower()
 
         if(convert_ext in cls.ALLOWED_EXTENSIONS):
-            img = Image.open(file_path).convert("RGB")
-            file_path = upload_folder + "/" + filename_save
-            img.save(app.config['UPLOAD_FOLDER'] +"/"+file_path, convert_ext)
-            file = File(path=file_path , name=filename_save.split(".")[0] 
+            img = Image.open(abs_file_path).convert("RGB")
+            save_file_abs_path = abs_path_upload + "/" + filename_save
+            img.save(  save_file_abs_path , convert_ext)
+            file = File(path=os.path.join("uploads",upload_folder)  , name=filename_save.split(".")[0] 
                 , extenstion=convert_ext.lower() , parse_seanse_id = parse_seanse_id)
             db.session.add(file)
             db.session.commit()
