@@ -12,12 +12,17 @@ import os
 class Parse_seanse(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id') ,nullable=True)
+    status = db.Column(db.String(64))
     created_at = db.Column(db.DateTime(timezone=True),
                            server_default=func.now())
 
     PARSE_FOLDER_NAME = "parser_load"
 
     def convert_all_img_from_url(self , page_to_parse):
+        '''
+        конвертирует все изображения со страницы
+        возвращает папку
+        '''
 
         urls = self.get_all_images(page_to_parse)
         save_urls = []
@@ -33,12 +38,14 @@ class Parse_seanse(db.Model):
 
             save_urls.append( buff)
 
+        upload_folder = os.path.join(self.PARSE_FOLDER_NAME, str(self.id),"optimized")
         for path in save_urls:
 
             _filename_save = path.split("/")[-1]
-            _upload_folder = os.path.join(self.PARSE_FOLDER_NAME, str(self.id),"optimized")
-            FileConverter.convert_to(_upload_folder,path,"WEBP"
+            FileConverter.convert_to(upload_folder,path,"WEBP"
             , filename_save=_filename_save , parse_seanse_id=self.id)
+    
+        return upload_folder
 
 
     @classmethod
