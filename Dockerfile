@@ -8,3 +8,4 @@ RUN pip install -r requirements.txt
 #ENTRYPOINT ['python3']python3
 #CMD ["export", "FLASK_APP=myapp"]
 CMD [ "flask", "--app" , "myapp", "run", "--host=0.0.0.0"]
+# flask --app myapp run --host=0.0.0.0
