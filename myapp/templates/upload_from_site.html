@@ -1,19 +1,20 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
+{% extends 'main_blade.html' %}
 
-<meta charset="UTF-8">
+{% block title %}
+  Конвертировать все фотографии с сайта
+{% endblock %}
 
-<title>Загрузить файл</title>
-</head>
+{% block content %}
+  <h1>Оптимизировать изображения на странице</h1>
+  <form method=post>
+    <input type=text name=site>
+    <input type=number name=redirect_count>
+    <input type=submit value=Optimize>
+  </form>
 
-<body>
-    <h1>Оптимизировать изображения на странице</h1>
-    <form method=post>
-      <input type=text name=site>
-      <input type=number name=redirect_count>
-      <input type=submit value=Optimize>
-    </form>
-</body>
-
-</html>
+  {% for image in images %}
+    <img src="{{image.path}}" >
+    
+  {% endfor %}
+  
+{% endblock %}

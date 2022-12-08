@@ -1,11 +1,31 @@
 import os
 import uuid
+from myapp import db
 from flask import Flask, flash, request, redirect, url_for , render_template
 from myapp.models.file_loader import FileLoader
 from myapp.models.file_converter import FileConverter
 from myapp.models.parser import Parser
+from myapp.models.parse_seanse import Parse_seanse
+from myapp.models.file import File
+from sqlalchemy import select
+
 
 PARSE_FOLDER_NAME = "parser_load"
+
+def get_upload_from_site(app,request):
+
+    parse_seanse_id = request.args.get('parse_seanse_id')
+    
+
+    query = File.query.filter(File.parse_seanse_id == parse_seanse_id).all()
+    #query = File.query.all()
+    print(query)
+    #images = []
+    #for img in query:
+    #    images.append(img._asdict())
+    #    print(img._asdict())
+    #print(images)
+    return render_template('upload_from_site.html' , images=query)
 
 def post_upload_from_site(app,request):
 
@@ -26,14 +46,18 @@ def post_upload_from_site(app,request):
 
     
 
-    print(save_urls)
+    seanse = Parse_seanse()
+    db.session.add(seanse)
+    db.session.commit()
+    
+
     for path in save_urls:
 
         _filename_save = path.split("/")[-1]
-        _upload_folder = app.config['UPLOAD_FOLDER'] +"/"+PARSE_FOLDER_NAME+"/"+parse_id+"/optimized"
-        FileConverter.convert_to(_upload_folder,path,"WEBP", filename_save=_filename_save)
-    
+        _upload_folder = PARSE_FOLDER_NAME+"/"+parse_id+"/optimized"
+        FileConverter.convert_to(_upload_folder,path,"WEBP"
+        , filename_save=_filename_save , parse_seanse_id=seanse.id)
+        
 
-    
-    return redirect(request.url)
+    return redirect( url_for('get_optimize' ,parse_seanse_id = seanse.id) )
     #return render_template('upload_from_site.html')

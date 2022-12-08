@@ -1,18 +1,13 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
+{% extends 'main_blade.html' %}
 
-<meta charset="UTF-8">
+{% block title %}
+  Конвертировать изображение
+{% endblock %}
 
-<title>Загрузить файл</title>
-</head>
-
-<body>
-    <h1>Загрузить новый файл</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-</body>
-
-</html>
+{% block content %}
+  <h1>Конвертировать изображение</h1>
+  <form method=post enctype=multipart/form-data>
+    <input type=file name=file>
+    <input type=submit value=Upload>
+  </form>
+{% endblock %}

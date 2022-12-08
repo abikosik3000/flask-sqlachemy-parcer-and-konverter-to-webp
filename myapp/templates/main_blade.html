@@ -4,12 +4,17 @@
 
 <meta charset="UTF-8">
 
-<title>{{title}}</title>
+<title>{% block title %}{% endblock %}</title>
 </head>
-
+<header>
+    {% block header %}{% endblock %}
+</header>
 <body>
-12
-{{body}}
+    {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+    {% endfor %}
+
+    {% block content %}{% endblock %}
 </body>
 
 </html>

@@ -2,15 +2,19 @@
 # -*- coding: utf-8 -*-
 from flask import Flask
 import os
-app = Flask(__name__)
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
+
+app = Flask(__name__ , static_url_path='', static_folder='uploads/')
+
 
 app.secret_key = os.urandom(24)
 
-# папка для сохранения загруженных файлов
-UPLOAD_FOLDER = os.path.dirname(__file__)+"/uploads"
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
-
+import myapp.config
+db.init_app(app)
 import myapp.routes
+
 
 
 #

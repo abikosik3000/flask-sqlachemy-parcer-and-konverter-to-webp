@@ -6,7 +6,7 @@ class FileLoader:
 
     @classmethod
     def create_or_exist_folder(cls,upload_folder):
-        # если путь не существует, создать di
+        # если путь не существует, создать dir
         if not os.path.isdir(upload_folder):
             os.makedirs(upload_folder)
 
@@ -57,7 +57,7 @@ class FileLoader:
             return None
 
     # расширения файлов, которые разрешено загружать
-    ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
     @classmethod
     def file_extension(cls,filename):
