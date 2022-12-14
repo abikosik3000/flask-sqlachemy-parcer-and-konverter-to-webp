@@ -4,7 +4,6 @@ import os
 from myapp.models.file import File
 from myapp import app , db
 
-
 class FileConverter:
 
     # расширения файлов, в которые разрешено конвертировать

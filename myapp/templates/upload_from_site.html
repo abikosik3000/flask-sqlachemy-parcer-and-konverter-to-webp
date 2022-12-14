@@ -4,18 +4,21 @@
   Конвертировать все фотографии с сайта
 {% endblock %}
 
-{% block content %}
-  <h1>Оптимизировать изображения на странице</h1>
+{% block app_content %}
+  <h4>Оптимизировать изображения на странице</h4>
+
   <form method=post>
-    <input type=text name=site>
-    <input type=number name=redirect_count>
-    <input type=submit value=Optimize>
+    <input type=text name=site placeholder="url сайта">
+    <button class="btn waves-effect waves-light" type="submit" name="action">
+      Оптимизировать
+    </button>
   </form>
 
+  <div class="collection ">
   {% for image in images %}
     
-    <img src="{{image.url}}" >
-    
+    <a class="collection-item" download="" href="{{image.url}}" >{{image.name}}</a>
+        
   {% endfor %}
-  
+  </div>
 {% endblock %}

@@ -10,8 +10,8 @@ import myapp.controllers.cabinet_controller as cabinet_controller
 from myapp.forms.login import LoginForm
 from myapp.models.user import User
 
-@login_required
 @app.route('/cabinet' , methods=['GET'])
+@login_required
 def get_cabinet():
     return cabinet_controller.get_cabinet(app,request)
     

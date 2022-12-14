@@ -4,21 +4,34 @@
   Кабинет
 {% endblock %}
 
-{% block content %}
+{% block app_content %}
 
-{{current_user.email}}
 
+<h4>
+    Кабинет пользователя {{current_user.email}}
+</h4>
+
+<a href="{{url_for('logout')}}" class="waves-effect waves-light btn">выйти</a>
+
+<p>История оптимизаций</p>
+<ul class="collapsible" accordion="true">
 {% for seanse in seanses %}
-    
-    <div>
-        <h4>seanse.page_to_parse</h4>
-        <div>
-            {% for img in seanse.images %}
-                <a download="" href="{{img.url}}">{{img.name}}</a>
-            {% endfor %}
+   
+    <li>
+        <div class="collapsible-header">
+            {{seanse.page_to_parse}}
         </div>
-    </div>
+        <div class="collapsible-body">
+
+            <div class="collection ">
+                {% for img in seanse.images %}
+                    <a download="" class="collection-item" href="{{img.url}}">{{img.name}}</a>
+                {% endfor %}
+            </div>
+            
+        </div>
+    </li>
     
 {% endfor %}
-
+</ul>
 {% endblock %}

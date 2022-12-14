@@ -1,3 +1,5 @@
+{% extends "material/base.html"%}
+{% block content %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -8,13 +10,38 @@
 </head>
 <header>
     {% block header %}{% endblock %}
+    <nav>
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo">Optimizator</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="{{url_for('get_main')}}" >Главная</a></li>
+                <li><a href="{{url_for('get_optimize')}}" >Оптимизировать</a></li>
+                
+                {% if current_user.is_authenticated %}
+                <li><a href="{{url_for('get_cabinet')}}" >Кабинет</a></li>
+                {% else %}
+                <li><a href="{{url_for('login')}}" >Войти</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        
+    </nav>
 </header>
 <body>
-    {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-    {% endfor %}
+    <div class="container">
 
-    {% block content %}{% endblock %}
+        <div>
+            <div class="flash_box">
+                {% for message in get_flashed_messages() %}
+                <div class="flash">{{ message }}</div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% block app_content %}
+        {% endblock %}
+    </div>
 </body>
 
 </html>
+{% endblock %}

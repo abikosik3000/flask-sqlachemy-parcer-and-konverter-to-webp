@@ -9,7 +9,6 @@ from myapp.models.file_converter import FileConverter
 from myapp.models.file import File
 import uuid
 import os
-import asyncio
 
 
 class Parse_seanse(db.Model):

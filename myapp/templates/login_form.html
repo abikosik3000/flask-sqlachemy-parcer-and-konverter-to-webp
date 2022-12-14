@@ -4,13 +4,27 @@
   Вход
 {% endblock %}
 
-{% block content %}
-<h1>Вход</h1>
-<form action="" method="post" >
-    
-    {{form.errors}}
-    {{form.email}}
-    {{form.password}}
-    <p><input type="submit" value="Войти"></p>
-</form>
+{% block app_content %}
+<h4>Вход</h4>
+
+<ul>
+  {% for field, errors in form.errors.items() %}
+    <li >{{field}}</li>
+    {% for error in errors %}
+    <li >{{error}}</li>
+    {% endfor %}
+  {% endfor %}
+</ul>
+
+<div class="row">
+  <form action="" method="post" class="col s4" >
+      
+      {{form.email}}
+      {{form.password}}
+      <button class="btn waves-effect waves-light" type="submit" name="action">
+        Войти
+      </button>
+      <a href="{{url_for('register')}}">Создать аккаунт</a>
+  </form>
+</div>
 {% endblock %}
