@@ -6,17 +6,19 @@ from flask_login import LoginManager, UserMixin  , login_required, login_user, c
 import myapp.controllers.loader_controller as loader_controller
 import myapp.controllers.optimize_controller as optimize_controller
 import myapp.controllers.login_controller as login_controller
+import myapp.controllers.cabinet_controller as cabinet_controller
 from myapp.forms.login import LoginForm
 from myapp.models.user import User
-
-@app.route('/')
-def get_main():
-    return render_template('main.html' )
 
 @login_required
 @app.route('/cabinet' , methods=['GET'])
 def get_cabinet():
-    return current_user.email
+    return cabinet_controller.get_cabinet(app,request)
+    
+
+@app.route('/')
+def get_main():
+    return render_template('main.html' )
 
 @app.route('/optimize' , methods=['GET'])
 def get_optimize():
@@ -32,16 +34,16 @@ LOGIN PATH
 '''
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
-    return login_controller.login()
+    return login_controller.login(app,request)
     
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
-    return login_controller.register()
+    return login_controller.register(app,request)
     
 @app.route('/logout')
 @login_required
 def logout():
-    return login_controller.logout()
+    return login_controller.logout(app,request)
 
 
 '''

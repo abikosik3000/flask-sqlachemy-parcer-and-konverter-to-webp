@@ -8,6 +8,9 @@ from myapp.models.user import User
 def login(app,request):
     form = LoginForm()
 
+    if(current_user.is_authenticated):
+        redirect(url_for('get_cabinet'))
+
     if request.method == 'POST' and form.validate():
 
         user = db.session.query(User).filter(User.email == form.email.data).first()
@@ -23,11 +26,15 @@ def login(app,request):
         login_user(user, False)
         flash('Вход в систему выполнен')
         return redirect(url_for('get_cabinet'))
+
     return render_template('login_form.html', form = form)
 
 
 def register(app,request):
     form = LoginForm()
+
+    if(current_user.is_authenticated):
+        redirect(url_for('get_cabinet'))
 
     if request.method == 'POST' and form.validate():
 

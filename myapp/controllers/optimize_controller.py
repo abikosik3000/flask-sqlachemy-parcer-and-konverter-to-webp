@@ -7,6 +7,7 @@ from myapp.models.file_converter import FileConverter
 from myapp.models.parse_seanse import Parse_seanse
 from myapp.models.file import File
 from sqlalchemy import select
+from flask_login import current_user
 
 
 PARSE_FOLDER_NAME = "parser_load"
@@ -28,7 +29,11 @@ def post_upload_from_site(app,request):
 
     page_to_parse = request.form.get("site")
 
-    seanse = Parse_seanse()
+    user_id = None
+    if(current_user.is_authenticated):
+        user_id = current_user.id
+        
+    seanse = Parse_seanse(user_id=user_id , page_to_parse=page_to_parse)
     db.session.add(seanse)
     db.session.commit()
     seanse.convert_all_img_from_url(page_to_parse)

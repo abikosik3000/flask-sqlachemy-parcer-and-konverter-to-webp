@@ -6,7 +6,19 @@
 
 {% block content %}
 
-{{form.current_user}}
-{{form.password}}
+{{current_user.email}}
+
+{% for seanse in seanses %}
+    
+    <div>
+        <h4>seanse.page_to_parse</h4>
+        <div>
+            {% for img in seanse.images %}
+                <a download="" href="{{img.url}}">{{img.name}}</a>
+            {% endfor %}
+        </div>
+    </div>
+    
+{% endfor %}
 
 {% endblock %}
