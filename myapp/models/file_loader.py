@@ -10,28 +10,7 @@ class FileLoader:
         # если путь не существует, создать dir
         if not os.path.isdir(upload_folder):
             os.makedirs(upload_folder)
-
-    @classmethod
-    def save_from_temp(cls,upload_folder,file ,filename_save = ""):
-        
-
-        abs_path_upload = os.path.join(app.config['UPLOAD_FOLDER'] , upload_folder)
-
-        cls.create_or_exist_folder(abs_path_upload)
-
-        if file and cls.allowed_file(file.filename):
-
-            if(filename_save == ""):
-                filename_save = str(uuid.uuid4()) + '.'+ cls.file_extension(file.filename)
-
-            file_abs_path = os.path.join(abs_path_upload , filename_save ) 
-            # сохраняем файл 
-            file.save(file_abs_path)
-
-            return os.path.join(upload_folder, filename_save)
-        else:
-            return None
-            
+    
     @classmethod
     def save_from_url(cls,upload_folder,url,filename_save = ""):
         #Загружает файл по URL‑адресу
@@ -71,3 +50,31 @@ class FileLoader:
     @classmethod
     def allowed_file(cls,filename):
         return '.' in filename and cls.file_extension(filename) in cls.ALLOWED_EXTENSIONS
+    
+    
+    
+    
+    
+    
+    '''
+    @classmethod
+    def save_from_temp(cls,upload_folder,file ,filename_save = ""):
+        
+
+        abs_path_upload = os.path.join(app.config['UPLOAD_FOLDER'] , upload_folder)
+
+        cls.create_or_exist_folder(abs_path_upload)
+
+        if file and cls.allowed_file(file.filename):
+
+            if(filename_save == ""):
+                filename_save = str(uuid.uuid4()) + '.'+ cls.file_extension(file.filename)
+
+            file_abs_path = os.path.join(abs_path_upload , filename_save ) 
+            # сохраняем файл 
+            file.save(file_abs_path)
+
+            return os.path.join(upload_folder, filename_save)
+        else:
+            return None
+    '''
