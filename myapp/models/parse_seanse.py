@@ -85,7 +85,6 @@ class Parse_seanse(db.Model):
     @classmethod
     def is_valid(cls ,url):
         # Проверяем, является ли url действительным URL
-        
         parsed = urlparse(url)
         return bool(parsed.netloc) and bool(parsed.scheme)
 

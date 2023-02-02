@@ -14,8 +14,7 @@ from myapp.models.user import User
 @login_required
 def get_cabinet():
     return cabinet_controller.get_cabinet(app,request)
-    
-
+ 
 @app.route('/')
 def get_main():
     return render_template('main.html' )
